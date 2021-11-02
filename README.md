@@ -19,7 +19,6 @@ also provides the ability to hook-up to an external API server.
 
 Inspect [src/config/config.js](src/config/config.js) and [vue.config.js](vue.config.js) for the details.
 
-
 ## More Information
 
 ### Project setup
