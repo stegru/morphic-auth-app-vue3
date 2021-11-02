@@ -1,4 +1,4 @@
-# morphic-community
+# morphic-auth-app
 
 ## Running locally
 
