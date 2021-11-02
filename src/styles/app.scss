@@ -1,0 +1,198 @@
+//@use "sass:color";
+@import "variables";
+@import "bootstrap-util";
+// Bootstrap customisations
+$theme-colors: (
+        morphic-blue: $morphic-blue-color,
+        morphic-green: $morphic-green-color
+);
+
+// Bootstrap
+@import "~bootstrap/scss/bootstrap.scss";
+@import "~bootstrap-vue/src/index.scss";
+
+// Generate some invert-X button variants, where the text is the colour.
+@each $color, $value in $theme-colors {
+  .btn-invert-#{$color} {
+    @include button-variant(color-yiq($value), $value);
+    color: $value;
+  }
+}
+
+// Style the buttons on focus-mode, and the editor, to green and blue inverted
+body.focusMode, body:not(.focusMode) #EditorActions, body:not(.focusMode) #SidePanel {
+
+  // green with white text
+  .btn-primary {
+    @include button-variant($morphic-green-color, $morphic-green-color);
+  }
+
+  // white with blue text
+  .btn-secondary {
+    @include button-variant(color-yiq($morphic-blue-color), $morphic-blue-color);
+    color: $morphic-blue-color;
+  }
+}
+
+.modal-footer .btn {
+  min-width: 5em;
+}
+
+// Make disabled buttons grey
+.btn {
+  &.disabled, &:disabled {
+    filter: grayscale(1) brightness(0.8) opacity(0.9);
+  }
+}
+
+.bg-silver {
+  background: $gray-200;
+}
+
+.rounded {
+  border-radius: 1rem;
+}
+
+button.btn.btn-link, a.btn.btn-link {
+  padding: 0;
+  vertical-align: baseline;
+  text-align: left;
+}
+
+// General hide/show
+// production-ready: .notProduction vs .onlyProduction
+// lite (mobile or focus): .notLite vs onlyLite
+// mobile: .notMobile vs .onlyMobile
+// focus mode: .notFocus vs .onlyFocus
+body.production .notProduction, body:not(.production) .onlyProduction,
+body.isLite .notLite, body:not(.isLite) .onlyLite,
+body.isMobile .notMobile, body:not(.isMobile) .onlyMobile,
+body.focusMode .notFocus, body:not(.focusMode) .onlyFocus {
+  display: none !important;
+}
+
+
+.alignRight {
+  display: block !important;
+  margin-left: auto !important;
+  width: fit-content;
+}
+
+// Link icons
+a > .b-icon:not(.noSpace):first-child {
+  margin-right: 0.25em;
+}
+
+.main .text-link {
+  color: $link-color;
+}
+
+body.focusMode .main {
+  a:not(.previewItem), .btn-link, .text-link {
+    text-decoration: underline;
+    color: $link-color-darker;
+  }
+}
+
+.max-height {
+  height: 100%;
+}
+
+.dialogCard {
+  border: none;
+  .card-title {
+    padding-bottom: 0.5em;
+    border-bottom: #ccc 1px solid;
+  }
+}
+
+// Make dialogs appear full-screen on mobiles
+body.isLite {
+  div[largedialog] {
+    .modal {
+      padding: 0 !important;
+
+      .modal-dialog.modal-lg, .modal-dialog.modal-xl {
+        background-color: $light;
+        max-width: none;
+        width: 100%;
+        margin: 0;
+        padding-bottom: 1em;
+
+        .modal-content {
+          border-radius: 1em;
+          margin: 0 auto;
+          max-width: 800px;
+        }
+      }
+    }
+  }
+  &.modal-open {
+    //overflow: auto;
+  }
+  &.menu-open, &.modal-open.menu-open {
+    overflow: hidden;
+  }
+}
+
+body.isMobile {
+  .modal-footer {
+    justify-content: space-evenly;
+    .btn {
+      min-width: 10em;
+    }
+  }
+}
+
+.hint-box {
+  display: inline-block;
+  background-color: #ffffcc;
+  border: 1px solid black;
+  border-radius: 0.5em;
+  padding: 0.5em;
+  box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.5);
+  font-family: 'Coming Soon', sans-serif;
+  font-size: 15px;
+}
+
+// Hide the widget for a radio button, so it can be customised.
+.customRadio {
+  input {
+    position: absolute !important;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+}
+
+// this gets overridden in App.vue with the real value - sane default to avoid adjustment during load.
+body:not(.isMobile, .focusMode) .desktop-headerMarginTop {
+  margin-top: 56px;
+}
+body:not(.isMobile, .focusMode) .desktop-headerPaddingTop {
+  padding-top: 56px;
+}
+
+.modal.submitting .modal-footer .btn:last-child, .btn.loading {
+  position: relative;
+
+  color: transparent !important;
+  &:before {
+    content: '';
+    position: absolute;
+
+    top: 50%;
+    right: 50%;
+    margin-top: -10px;
+    margin-right: -10px;
+
+    width: 1.25em;
+    height: 1.25em;
+
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    border-top-color: #000;
+    animation: spinner 700ms linear infinite;
+  }
+
+}

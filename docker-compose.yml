@@ -1,0 +1,8 @@
+version: "3.7"
+services:
+  community:
+    build:
+      context: .
+    ports:
+      - "8000:80"
+      - "9180:9180"
