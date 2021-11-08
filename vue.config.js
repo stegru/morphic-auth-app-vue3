@@ -1,4 +1,20 @@
 module.exports = {
+
+    pages: {
+        login: {
+            entry: "src/pages/login.js",
+            template: "public/template.html",
+            filename: "index.html"
+        },
+        signup: {
+            entry: "src/pages/signup.js",
+            template: "public/template.html",
+            filename: "signup/index.html"
+        }
+    },
+
+    lintOnSave: "warning",
+
     devServer: {
         port: 8080,
         disableHostCheck: true,
@@ -12,7 +28,7 @@ module.exports = {
         }
     },
 
-    chainWebpack: config => {
+    chainWebpack: (config) => {
         config.plugins.delete("prefetch");
     },
 
